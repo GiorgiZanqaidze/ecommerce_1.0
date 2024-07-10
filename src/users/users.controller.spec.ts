@@ -13,7 +13,7 @@ describe('UsersController', () => {
   let module: TestingModule;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
+    module = await Test.createTestingModule({
       imports: [
         TypeOrmModule.forRoot({
           type: 'sqlite',
@@ -105,6 +105,6 @@ describe('UsersController', () => {
     const createdUser = await controller.create(createUserDto);
     await controller.remove(createdUser.id.toString());
     const user = await service.findOne(createdUser.id);
-    expect(user).toBeUndefined();
+    expect(user).toBeNull();
   });
 });
