@@ -8,10 +8,11 @@ import { AuthenticatedRequest } from './types';
 export class AuthController {
 
     constructor(private authService: AuthService) {}
+    // TODO: change id to email
     @HttpCode(HttpStatus.OK)
     @Post('login')
     signIn(@Body() signInDto: Record<string, any>) {
-        return this.authService.signIn(signInDto.firstName, signInDto.password);
+        return this.authService.signIn(signInDto.id, signInDto.password);
     }
 
     @UseGuards(AuthGuard)
