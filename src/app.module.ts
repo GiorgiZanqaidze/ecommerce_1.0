@@ -3,7 +3,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AuthMiddleware } from './auth/auth.middleware';
 
 @Module({
   imports: [UsersModule,
@@ -20,10 +19,4 @@ import { AuthMiddleware } from './auth/auth.middleware';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(AuthMiddleware)
-      .forRoutes('users'); // Apply auth middleware to 'users' routes
-  }
-}
+export class AppModule {}

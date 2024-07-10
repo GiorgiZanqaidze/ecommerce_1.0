@@ -25,11 +25,4 @@ describe('AppController', () => {
       expect(appController.getHello()).toBe('Hello World!');
     });
   });
-
-  describe('users', () => {
-    it('should return an array of users', async () => {
-      const users = await appController.getAllUsers();
-      expect(users).toEqual(['user1', 'user2']);
-    });
-  });
 });

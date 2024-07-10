@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetada
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { AuthGuard } from '../auth/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -10,14 +9,12 @@ export class UsersController {
 
   @Post()
   @SetMetadata('roles', ['admin'])
-  @UseGuards(AuthGuard)
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }
 
   
   @Get()
-  @UseGuards(AuthGuard)
   findAll() {
     return this.usersService.findAll();
   }
