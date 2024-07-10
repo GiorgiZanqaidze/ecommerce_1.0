@@ -1,0 +1,14 @@
+{
+  "type": "mysql",
+  "host": "localhost",
+  "port": 3306,
+  "username": "gio",
+  "password": "root",
+  "database": "ecommerce",
+  "entities": ["entity/*.js"],
+  "migrationsTableName": "admin_migration_table",
+  "migrations": ["migration/*.js"],
+  "cli": {
+    "migrationsDir": "migration"
+  }
+}
