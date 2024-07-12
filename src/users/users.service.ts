@@ -17,23 +17,6 @@ export class UsersService {
     return this.usersRepository.save(user);
   }
 
-  private readonly users = [
-    {
-      userId: 1,
-      firstName: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      firstName: 'maria',
-      password: 'guess',
-    },
-  ];
-
-  async findOne1(firstName: string): Promise<Partial<User> | undefined> {
-    return this.users.find(user => user.firstName === firstName);
-  }
-
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
@@ -50,4 +33,6 @@ export class UsersService {
   async remove(id: number): Promise<void> {
     await this.usersRepository.delete(id);
   }
+
+  
 }
