@@ -5,18 +5,18 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
+import typeorm from './config/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [UsersModule,
-  TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'gio',
-    password: 'root',
-    database: 'ecommerce',
-    entities: [__dirname + '/**/*.entity{.ts,.js}'],
-    synchronize: true,
+  ConfigModule.forRoot({
+    isGlobal: true,
+    load: [typeorm]
+  }),
+  TypeOrmModule.forRootAsync({
+    inject: [ConfigService],
+    useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
   }),
   AuthModule,
   ProductsModule,],
