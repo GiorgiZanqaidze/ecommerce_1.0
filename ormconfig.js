@@ -7,8 +7,8 @@ module.exports = {
   database: 'ecommerce',
   entities: [__dirname + '/**/*.entity{.ts,.js}'],
   migrationsTableName: 'admin_migration_table',
-  migrations: [__dirname + '/migration/*.js'],
+  migrations: [__dirname + '/migrations/*.js'],
   cli: {
-    migrationsDir: 'migration'
+    migrationsDir: 'src/migrations'
   }
 };

@@ -7,8 +7,8 @@
   "database": "ecommerce",
   "entities": ["entity/*.js"],
   "migrationsTableName": "admin_migration_table",
-  "migrations": ["migration/*.js"],
+  "migrations": ["migrations/*.js"],
   "cli": {
-    "migrationsDir": "migration"
+    "migrationsDir": "src/migrations"
   }
 }
