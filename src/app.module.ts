@@ -7,9 +7,12 @@ import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import typeorm from './config/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PrismaService } from './prisma/prisma.service';
+import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
-  imports: [UsersModule,
+  imports: [
+  UsersModule,
   ConfigModule.forRoot({
     isGlobal: true,
     load: [typeorm]
@@ -19,7 +22,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     useFactory: async (configService: ConfigService) => (configService.get('typeorm'))
   }),
   AuthModule,
-  ProductsModule,],
+  ProductsModule,
+  PrismaModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
