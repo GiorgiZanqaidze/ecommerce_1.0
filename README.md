@@ -71,3 +71,13 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+## Project environment
+
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USERNAME=gio
+DATABASE_PASSWORD=root
+DATABASE_NAME=ecommerce
+
