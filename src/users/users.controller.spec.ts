@@ -1,110 +1,80 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entities/user.entity';
-import { Repository } from 'typeorm';
-import { getRepositoryToken } from '@nestjs/typeorm';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 describe('UsersController', () => {
   let controller: UsersController;
   let service: UsersService;
-  let repository: Repository<User>;
-  let module: TestingModule;
+
+  const mockUsersService = {
+    create: jest.fn(dto => Promise.resolve({ id: Date.now(), ...dto })),
+    findAll: jest.fn(() => Promise.resolve([{ id: 1, firstName: 'John', email: 'john@example.com' }])),
+    findOne: jest.fn(id => Promise.resolve({ id, firstName: 'John', email: 'john@example.com' })),
+    update: jest.fn((id, dto) => Promise.resolve({ id, ...dto })),
+    remove: jest.fn(id => Promise.resolve({ id })),
+  };
 
   beforeEach(async () => {
-    module = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: ':memory:',
-          entities: [User],
-          synchronize: true,
-        }),
-        TypeOrmModule.forFeature([User]),
-      ],
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [UsersController],
-      providers: [UsersService],
+      providers: [
+        {
+          provide: UsersService,
+          useValue: mockUsersService,
+        },
+      ],
     }).compile();
 
     controller = module.get<UsersController>(UsersController);
     service = module.get<UsersService>(UsersService);
-    repository = module.get<Repository<User>>(getRepositoryToken(User));
   });
 
-  afterEach(async () => {
-    await module.close();
+  describe('create', () => {
+    it('should create a user', async () => {
+      const createUserDto: CreateUserDto = {
+        firstName: 'John',
+        password: 'securePassword',
+        email: 'john@example.com',
+        roles: 'user',
+      };
+      const result = await controller.create(createUserDto);
+      expect(result).toEqual({ id: expect.any(Number), ...createUserDto });
+      expect(mockUsersService.create).toHaveBeenCalledWith(createUserDto);
+    });
   });
 
-  it('should be defined', () => {
-    expect(controller).toBeDefined();
+  describe('findAll', () => {
+    it('should return an array of users', async () => {
+      const result = await controller.findAll();
+      expect(result).toEqual([{ id: 1, firstName: 'John', email: 'john@example.com' }]);
+      expect(mockUsersService.findAll).toHaveBeenCalled();
+    });
   });
 
-  it('should create a user', async () => {
-    const createUserDto = {
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-      email: 'john.doe@example.com',
-      password: 'password123',
-      roles: 'user',
-    };
-    const user = await controller.create(createUserDto);
-    expect(user).toHaveProperty('id');
-    expect(user.firstName).toEqual('John');
-    expect(user.lastName).toEqual('Doe');
-    expect(user.isActive).toEqual(true);
+  describe('findOne', () => {
+    it('should return a single user', async () => {
+      const result = await controller.findOne('1');
+      expect(result).toEqual({ id: 1, firstName: 'John', email: 'john@example.com' });
+      expect(mockUsersService.findOne).toHaveBeenCalledWith(1);
+    });
   });
 
-  it('should find all users', async () => {
-    const users = await controller.findAll();
-    expect(users).toBeInstanceOf(Array);
+  describe('update', () => {
+    it('should update and return the user', async () => {
+      const updateUserDto: UpdateUserDto = { firstName: 'John Smith' };
+      const result = await controller.update('1', updateUserDto);
+      expect(result).toEqual({ id: 1, ...updateUserDto });
+      expect(mockUsersService.update).toHaveBeenCalledWith(1, updateUserDto);
+    });
   });
 
-  it('should find one user', async () => {
-    const createUserDto = {
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-      email: 'john.doe@example.com',
-      password: 'password123',
-      roles: 'user',
-    };
-    const createdUser = await controller.create(createUserDto);
-    const user = await controller.findOne(createdUser.id.toString());
-    expect(user).toBeDefined();
-    expect(user.id).toEqual(createdUser.id);
-  });
-
-  it('should update a user', async () => {
-    const createUserDto = {
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-      email: 'john.doe@example.com',
-      password: 'password123',
-      roles: 'user',
-    };
-    const createdUser = await controller.create(createUserDto);
-    const updateUserDto = { firstName: 'Jane', lastName: 'Doe', isActive: false };
-    const updatedUser = await controller.update(createdUser.id.toString(), updateUserDto);
-    expect(updatedUser.firstName).toEqual('Jane');
-    expect(updatedUser.lastName).toEqual('Doe');
-    expect(updatedUser.isActive).toEqual(false);
-  });
-
-  it('should remove a user', async () => {
-    const createUserDto = {
-      firstName: 'John',
-      lastName: 'Doe',
-      isActive: true,
-      email: 'john.doe@example.com',
-      password: 'password123',
-      roles: 'user',
-    };
-    const createdUser = await controller.create(createUserDto);
-    await controller.remove(createdUser.id.toString());
-    const user = await service.findOne(createdUser.id);
-    expect(user).toBeNull();
+  describe('remove', () => {
+    it('should remove the user and return the id', async () => {
+      const result = await controller.remove('1');
+      expect(result).toEqual({ id: 1 });
+      expect(mockUsersService.remove).toHaveBeenCalledWith(1);
+    });
   });
 });
