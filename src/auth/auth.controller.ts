@@ -2,7 +2,8 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards, Request }
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { AuthenticatedRequest } from './types';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
 
