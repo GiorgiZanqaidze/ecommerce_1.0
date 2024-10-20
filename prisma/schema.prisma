@@ -21,8 +21,14 @@ model User {
   isActive  Boolean   @default(true)
   password  String
   email     String    @unique
-  roles     String
+  roles    Role[]   @relation("UserRole")
   orders    Order[]   // Relation to Orders
+}
+
+model Role {
+  id       Int      @id @default(autoincrement())
+  name     String   @unique
+  users    User[]   @relation("UserRole")
 }
 
 model Product {
