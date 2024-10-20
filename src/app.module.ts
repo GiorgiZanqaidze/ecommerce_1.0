@@ -7,6 +7,10 @@ import { ProductsModule } from './products/products.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { OrdersModule } from './orders/orders.module';
+import { OrderItemController } from './order-item/order-item.controller';
+import { OrderItemModule } from './order-item/order-item.module';
+import { OrderItemService } from './order-item/order-item.service';
+import { CategoryModule } from './category/category.module';
 
 @Module({
   imports: [
@@ -19,8 +23,10 @@ import { OrdersModule } from './orders/orders.module';
     envFilePath: '.env', // Specify the path to the .env file
   }),
   OrdersModule,
+  OrderItemModule,
+  CategoryModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, OrderItemController],
+  providers: [AppService, OrderItemService],
 })
 export class AppModule {}

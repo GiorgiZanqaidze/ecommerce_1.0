@@ -43,7 +43,7 @@ export class OrdersService {
   // Get all orders for a specific user by userId
   async getOrdersByUserId(userId: number) {
     return this.prisma.order.findMany({
-      where: { userId },
+      where: { userId: +userId },
       include: {
         orderItems: true,
       },
