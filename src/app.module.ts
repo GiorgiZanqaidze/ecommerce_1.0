@@ -11,6 +11,7 @@ import { OrderItemController } from './order-item/order-item.controller';
 import { OrderItemModule } from './order-item/order-item.module';
 import { OrderItemService } from './order-item/order-item.service';
 import { CategoryModule } from './category/category.module';
+import { RoleModule } from './role/role.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { CategoryModule } from './category/category.module';
   OrdersModule,
   OrderItemModule,
   CategoryModule,
+  RoleModule,
   ],
   controllers: [AppController, OrderItemController],
   providers: [AppService, OrderItemService],
