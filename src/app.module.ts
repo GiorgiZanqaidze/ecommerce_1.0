@@ -6,7 +6,8 @@ import { AuthModule } from "./auth/auth.module";
 import { ProductsModule } from "./products/products.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { PrismaModule } from "./prisma/prisma.module";
-import { OrderModule } from './order/order.module';
+import { OrderModule } from "./order/order.module";
+import { LoggerMiddleware, LoggerModule } from "./common";
 
 @Module({
   imports: [
