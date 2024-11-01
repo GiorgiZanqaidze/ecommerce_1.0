@@ -1,16 +1,16 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
-import { JwtService } from '@nestjs/jwt';
-import { AuthenticatedRequest } from './types';
+import { Test, TestingModule } from "@nestjs/testing";
+import { AuthController } from "./auth.controller";
+import { AuthService } from "./auth.service";
+import { AuthGuard } from "./auth.guard";
+import { JwtService } from "@nestjs/jwt";
+import { AuthenticatedRequest } from "./types";
 
-describe('AuthController', () => {
+describe("AuthController", () => {
   let authController: AuthController;
   let authService: AuthService;
 
   const mockAuthService = {
-    signIn: jest.fn((id: number, password: string) => Promise.resolve({ access_token: 'test-token' })),
+    signIn: jest.fn((id: number, password: string) => Promise.resolve({ access_token: "test-token" })),
   };
 
   const mockAuthGuard = {
@@ -36,19 +36,19 @@ describe('AuthController', () => {
     authService = module.get<AuthService>(AuthService);
   });
 
-  describe('signIn', () => {
-    it('should return a JWT token', async () => {
-      const signInDto = { id: 1, password: 'password' };
+  describe("signIn", () => {
+    it("should return a JWT token", async () => {
+      const signInDto = { id: 1, password: "password" };
       const result = await authController.signIn(signInDto);
-      expect(result).toEqual({ access_token: 'test-token' });
+      expect(result).toEqual({ access_token: "test-token" });
       expect(authService.signIn).toHaveBeenCalledWith(signInDto.id, signInDto.password);
     });
   });
 
-  describe('getProfile', () => {
-    it('should return the user profile', () => {
+  describe("getProfile", () => {
+    it("should return the user profile", () => {
       const request = {
-        user: { id: 1, firstName: 'John' },
+        user: { id: 1, firstName: "John" },
       } as unknown as AuthenticatedRequest;
 
       const result = authController.getProfile(request);
