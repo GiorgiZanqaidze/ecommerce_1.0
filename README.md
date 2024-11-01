@@ -1,68 +1,119 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# E-Commerce API 🛒
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This project is a backend for an e-commerce platform built with NestJS, Prisma ORM, and other modern tools.
 
-## Description
+## Features ✨
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 🔐 **Authentication**: User login and registration with role-based access.
+- 🛍️ **Products**: CRUD operations for product management.
+- 🗂️ **Categories**: Organize products into categories.
+- 📦 **Orders**: Order management with relation to users and order items.
+- 🛠️ **Prisma ORM**: Database interaction through Prisma.
+- 🛡️ **Role-based Access**: Different user roles with specific permissions.
 
-## Installation
+## Technologies Used 🛠️
 
-```bash
-$ npm install
+- 🏗️ **NestJS**: Backend framework.
+- 🗃️ **Prisma**: ORM for database interaction.
+- 📝 **TypeScript**: Programming language for type safety.
+- 🛢️ **PostgreSQL/MySQL/SQLite**: Database systems supported by Prisma.
+
+## Project Structure 📂
+
+```plaintext
+├── src
+│   ├── auth             # Authentication and authorization logic
+│   ├── category         # Product category management
+│   ├── common           # Common modules and services
+│   ├── order-item       # Handling items within orders
+│   ├── orders           # Order management module
+│   ├── prisma           # Prisma service for database access
+│   ├── products         # Product management module
+│   ├── users            # User management module
+│   ├── app.module.ts    # Root module
+│   ├── app.controller.ts# Application entry point controller
+│   └── app.service.ts   # Application services
+├── db
+│   └── seed.ts          # Database seeding script
+├── dist                 # Compiled output
+├── test                 # Test files
+├── package.json         # Project dependencies and scripts
+└── tsconfig.json        # TypeScript configuration
 ```
 
-## Running the app
+## Getting Started 🚀
 
-```bash
-# development
-$ npm run start
+### Prerequisites 🧰
 
-# watch mode
-$ npm run start:dev
+- 🖥️ Node.js
+- 🗄️ PostgreSQL/MySQL (or any database supported by Prisma)
 
-# production mode
-$ npm run start:prod
-```
+### Installation ⚙️
 
-## Test
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd ecommerce
+   ```
 
-```bash
-# unit tests
-$ npm run test
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-# e2e tests
-$ npm run test:e2e
+3. Set up the environment variables:
+   Copy the `.env.example` file to `.env` and update it with your database and other configuration details.
 
-# test coverage
-$ npm run test:cov
-```
+4. Run Prisma migrations to set up the database:
+   ```bash
+   npx prisma migrate dev
+   ```
 
-## Project environment variables
+5. Seed the database (optional):
+   ```bash
+   npm run seed
+   ```
 
-DATABASE_HOST=localhost
-DATABASE_PORT=3306
-DATABASE_USERNAME=gio
-DATABASE_PASSWORD=root
-DATABASE_NAME=ecommerce
+### Running the Application ▶️
 
+- In development mode:
+  ```bash
+  npm run start:dev
+  ```
+
+- In production mode:
+  ```bash
+  npm run build
+  npm run start:prod
+  ```
+
+### Testing 🧪
+
+- Run tests:
+  ```bash
+  npm run test
+  ```
+
+## API Endpoints 🌐
+
+### Authentication
+
+- `POST /auth/login`: 🔑 User login.
+- `POST /auth/register`: 📝 User registration.
+
+### Products
+
+- `GET /products`: 📄 List all products.
+- `POST /products`: ➕ Add a new product.
+
+### Orders
+
+- `GET /orders`: 📦 Get all orders.
+- `POST /orders`: ➡️ Create a new order.
+
+...and more based on your modules.
+
+## License 📜
+
+This project is licensed under the MIT License.
