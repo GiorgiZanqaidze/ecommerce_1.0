@@ -1,8 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service'; // Adjust the path as necessary
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category } from '@prisma/client';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service"; // Adjust the path as necessary
+import { CreateCategoryDto } from "./dto/create-category.dto";
+import { UpdateCategoryDto } from "./dto/update-category.dto";
+import { Category } from "@prisma/client";
 
 @Injectable()
 export class CategoryService {
@@ -24,7 +24,7 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new NotFoundException('Category not found');
+      throw new NotFoundException("Category not found");
     }
 
     return category;
@@ -36,7 +36,7 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new NotFoundException('Category not found');
+      throw new NotFoundException("Category not found");
     }
 
     return this.prisma.category.update({
@@ -51,7 +51,7 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new NotFoundException('Category not found');
+      throw new NotFoundException("Category not found");
     }
 
     return this.prisma.category.delete({

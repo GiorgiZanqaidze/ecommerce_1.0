@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { CreateOrderDto } from './dto/create-order.dto';
-import { UpdateOrderDto } from './dto/update-order.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable } from "@nestjs/common";
+import { CreateOrderDto } from "./dto/create-order.dto";
+import { UpdateOrderDto } from "./dto/update-order.dto";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Injectable()
 export class OrdersService {
@@ -16,7 +16,7 @@ export class OrdersService {
         userId,
         totalPrice,
         orderItems: {
-          create: orderItems.map((item) => ({
+          create: orderItems.map(item => ({
             productId: item.productId,
             quantity: item.quantity,
             price: item.price,
@@ -59,7 +59,7 @@ export class OrdersService {
       await this.prisma.orderItem.deleteMany({ where: { orderId: id } });
 
       await this.prisma.orderItem.createMany({
-        data: orderItems.map((item) => ({
+        data: orderItems.map(item => ({
           orderId: id,
           productId: item.productId,
           quantity: item.quantity,

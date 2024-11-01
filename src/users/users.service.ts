@@ -1,9 +1,9 @@
 // src/users/users.service.ts
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { PrismaService } from '../prisma/prisma.service';
-import { User } from '@prisma/client';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { CreateUserDto } from "./dto/create-user.dto";
+import { UpdateUserDto } from "./dto/update-user.dto";
+import { PrismaService } from "../prisma/prisma.service";
+import { User } from "@prisma/client";
 
 @Injectable()
 export class UsersService {
@@ -13,9 +13,11 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         ...createUserDto,
-        roles: createUserDto.roles ? {
-          connect: createUserDto.roles.map(role => ({ id: role })),
-        } : undefined,
+        roles: createUserDto.roles
+          ? {
+              connect: createUserDto.roles.map(role => ({ id: role })),
+            }
+          : undefined,
       },
     });
   }
@@ -36,15 +38,17 @@ export class UsersService {
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
-      throw new NotFoundException('User not found.');
+      throw new NotFoundException("User not found.");
     }
 
     // Handle roles update
-    const rolesData = updateUserDto.roles ? {
-      set: updateUserDto.roles.map(role => ({
-        id: Number(role), // Assuming roles are identified by their IDs
-      })),
-    } : undefined; // Only set roles if they are provided
+    const rolesData = updateUserDto.roles
+      ? {
+          set: updateUserDto.roles.map(role => ({
+            id: Number(role), // Assuming roles are identified by their IDs
+          })),
+        }
+      : undefined; // Only set roles if they are provided
 
     return this.prisma.user.update({
       where: { id },

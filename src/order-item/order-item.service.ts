@@ -1,9 +1,9 @@
 // src/order-item/order-item.service.ts
 
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service'; // Adjust the import based on your directory structure
-import { CreateOrderItemDto } from './dto/create-order-item.dto';
-import { OrderItem } from '@prisma/client';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { PrismaService } from "../prisma/prisma.service"; // Adjust the import based on your directory structure
+import { CreateOrderItemDto } from "./dto/create-order-item.dto";
+import { OrderItem } from "@prisma/client";
 
 @Injectable()
 export class OrderItemService {
