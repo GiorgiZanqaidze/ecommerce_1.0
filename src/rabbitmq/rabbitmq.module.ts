@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { RabbitMQService } from './rabbitmq.service';
-import { RabbitMQController } from './rabbitmq.controller';
-import { RabbitMQModule as GolevelupRabbitMQModule } from '@golevelup/nestjs-rabbitmq';
+import { Module } from "@nestjs/common";
+import { RabbitMQService } from "./rabbitmq.service";
+import { RabbitMQController } from "./rabbitmq.controller";
+import { RabbitMQModule as GolevelupRabbitMQModule } from "@golevelup/nestjs-rabbitmq";
 
 @Module({
   imports: [
@@ -9,8 +9,8 @@ import { RabbitMQModule as GolevelupRabbitMQModule } from '@golevelup/nestjs-rab
       uri: process.env.RABBITMQ_URL,
       exchanges: [
         {
-          name: 'your_exchange',
-          type: 'topic', // or 'direct', 'fanout', etc.
+          name: "your_exchange",
+          type: "topic", // or 'direct', 'fanout', etc.
         },
       ],
     }),

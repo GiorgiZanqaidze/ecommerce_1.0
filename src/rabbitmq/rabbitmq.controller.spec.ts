@@ -1,7 +1,7 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { RabbitMQController } from './rabbitmq.controller';
+import { Test, TestingModule } from "@nestjs/testing";
+import { RabbitMQController } from "./rabbitmq.controller";
 
-describe('RabbitMQController', () => {
+describe("RabbitMQController", () => {
   let controller: RabbitMQController;
 
   beforeEach(async () => {
@@ -12,7 +12,7 @@ describe('RabbitMQController', () => {
     controller = module.get<RabbitMQController>(RabbitMQController);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(controller).toBeDefined();
   });
 });

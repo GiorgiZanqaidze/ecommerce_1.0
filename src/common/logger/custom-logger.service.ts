@@ -4,8 +4,8 @@ import { LoggerContext } from "../types/logger-context.enum";
 @Injectable()
 export class CustomLoggerService extends Logger {
   private static colors = {
-    [LoggerContext.DEFAULT]: { log: '\x1b[37m', error: '\x1b[31m', success: '\x1b[32m', warn: '\x1b[33m' },  // White, Red, Green, Yellow
-    [LoggerContext.RABBIT]: { log: '\x1b[38;5;209m', error: '\x1b[41m', success: '\x1b[33m', warn: '\x1b[35m' }, // Cyan, Red background, Yellow, Magenta
+    [LoggerContext.DEFAULT]: { log: "\x1b[37m", error: "\x1b[31m", success: "\x1b[32m", warn: "\x1b[33m" }, // White, Red, Green, Yellow
+    [LoggerContext.RABBIT]: { log: "\x1b[38;5;209m", error: "\x1b[41m", success: "\x1b[33m", warn: "\x1b[35m" }, // Cyan, Red background, Yellow, Magenta
   };
 
   log(message: string, context?: LoggerContext) {

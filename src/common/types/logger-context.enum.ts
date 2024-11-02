@@ -1,4 +1,4 @@
 export enum LoggerContext {
-    DEFAULT = 'Default',
-    RABBIT = 'RABBIT',
-  }
+  DEFAULT = "Default",
+  RABBIT = "RABBIT",
+}
