@@ -6,7 +6,6 @@ import { AuthModule } from "./auth/auth.module";
 import { ProductsModule } from "./products/products.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { PrismaModule } from "./prisma/prisma.module";
-import { LoggerMiddleware, LoggerModule } from "./common";
 import { OrdersModule } from "./orders/orders.module";
 import { OrderItemController } from "./order-item/order-item.controller";
 import { OrderItemModule } from "./order-item/order-item.module";
