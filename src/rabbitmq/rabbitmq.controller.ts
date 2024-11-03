@@ -29,19 +29,4 @@ export class RabbitMQController {
   getStatus() {
     return "RabbitMQ Service is running!";
   }
-
-  @Get("receive")
-  @ApiResponse({ status: 200, description: "Message received successfully." })
-  async receiveMessageFromQueue() {
-    this.logger.log("Receiving message from RabbitMQ", LoggerContext.RABBIT);
-    const message = await this.rabbitMQService.receiveMessage();
-
-    if (message) {
-      this.logger.log("Message received successfully", LoggerContext.RABBIT);
-      return { message };
-    } else {
-      this.logger.log("No messages in the queue", LoggerContext.RABBIT);
-      return { message: "No messages in the queue." };
-    }
-  }
 }

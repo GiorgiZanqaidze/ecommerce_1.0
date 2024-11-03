@@ -4,6 +4,7 @@ import { CustomLoggerService } from "src/common";
 import { LoggerContext } from "src/common/types/logger-context.enum";
 import { MessageHandlerService } from "src/prisma/message-handler.service";
 import { OrderMessageDto } from "./dto/order-message.dto";
+import { MessageDto } from "./dto/message.dto";
 
 @Injectable()
 export class RabbitMQService implements OnModuleDestroy {
@@ -22,6 +23,9 @@ export class RabbitMQService implements OnModuleDestroy {
       this.channel = await this.connection.createChannel();
       await this.channel.assertQueue(this.queueName, { durable: true });
       this.logger.log("RabbitMQ connected", LoggerContext.RABBIT);
+
+      // Start consuming messages
+      this.startConsumingMessages();
 
       // Listen for connection close and errors to handle reconnection
       this.connection.on("close", () => {
@@ -43,7 +47,7 @@ export class RabbitMQService implements OnModuleDestroy {
     }
   }
 
-  async sendMessage(message: OrderMessageDto) {
+  async sendMessage<T>(message: MessageDto<T>) {
     try {
       // Validate message is an instance of OrderMessageDto
       if (!message) {
@@ -61,48 +65,35 @@ export class RabbitMQService implements OnModuleDestroy {
     }
   }
 
-  async receiveMessage(timeout: number = 5000): Promise<string | null> {
-    return new Promise((resolve, reject) => {
-      let timer: NodeJS.Timeout;
+  private async handleMessage(msg: any) {
+    const messageContent = msg.content.toString();
+    this.channel.ack(msg); // Acknowledge the message
+    this.logger.log(`Message received and acknowledged: ${messageContent}`, LoggerContext.RABBIT);
 
-      this.logger.log("Attempting to consume messages from the queue", LoggerContext.RABBIT);
-
-      // Function to handle received messages
-      const consumeMessage = (msg: any) => {
-        if (msg) {
-          const messageContent = msg.content.toString();
-          this.channel.ack(msg); // Acknowledge the message
-          clearTimeout(timer); // Clear the timeout if a message is received
-          this.logger.log(`Message received and acknowledged: ${messageContent}`, LoggerContext.RABBIT);
-
-          try {
-            // Attempt to parse the message as JSON
-            const parsedMessage = JSON.parse(messageContent);
-            // Process the received message using the MessageHandlerService
-            this.messageHandler.processOrderMessage(parsedMessage);
-            resolve(messageContent); // Resolve with the message content if JSON
-          } catch (error) {
-            // Handle non-JSON messages or log an error if JSON parsing fails
-            this.logger.error(`Received a non-JSON message: ${messageContent}`);
-            resolve(null); // Optionally resolve null or handle the message differently
-          }
-        }
-      };
-
-      // Start consuming messages from the queue
-      this.channel.consume(this.queueName, consumeMessage, { noAck: false });
-
-      // Set a timeout to resolve with null if no message is received in the specified time
-      timer = setTimeout(() => {
-        this.logger.log("Timeout reached, no messages in the queue", LoggerContext.RABBIT);
-        this.channel.cancel(this.queueName); // Cancel the consumer to stop listening
-        resolve(null); // Resolve null if the timeout is reached
-      }, timeout);
-    });
+    try {
+      // Attempt to parse the message as JSON
+      const parsedMessage = JSON.parse(messageContent);
+      // Process the received message using the MessageHandlerService
+      await this.messageHandler.processOrderMessage(parsedMessage);
+    } catch (error) {
+      this.logger.error(`Error processing message: ${messageContent}`, error);
+    }
   }
 
   private retryConnection(): void {
     this.initializeRabbitMQ();
+  }
+
+  private startConsumingMessages() {
+    this.channel.consume(
+      this.queueName,
+      msg => {
+        if (msg) {
+          this.handleMessage(msg);
+        }
+      },
+      { noAck: false },
+    );
   }
 
   // Close the connection when the module is destroyed
