@@ -13,6 +13,7 @@ import { OrderItemService } from "./order-item/order-item.service";
 import { CategoryModule } from "./category/category.module";
 import { RoleModule } from "./role/role.module";
 import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
     CategoryModule,
     RoleModule,
     RabbitMQModule,
+    CheckoutModule,
   ],
   controllers: [AppController, OrderItemController],
   providers: [AppService, OrderItemService],
