@@ -6,13 +6,14 @@ import { AuthModule } from "./auth/auth.module";
 import { ProductsModule } from "./products/products.module";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { PrismaModule } from "./prisma/prisma.module";
-import { LoggerMiddleware, LoggerModule } from "./common";
 import { OrdersModule } from "./orders/orders.module";
 import { OrderItemController } from "./order-item/order-item.controller";
 import { OrderItemModule } from "./order-item/order-item.module";
 import { OrderItemService } from "./order-item/order-item.service";
 import { CategoryModule } from "./category/category.module";
 import { RoleModule } from "./role/role.module";
+import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
+import { CheckoutModule } from './checkout/checkout.module';
 
 @Module({
   imports: [
@@ -28,6 +29,8 @@ import { RoleModule } from "./role/role.module";
     OrderItemModule,
     CategoryModule,
     RoleModule,
+    RabbitMQModule,
+    CheckoutModule,
   ],
   controllers: [AppController, OrderItemController],
   providers: [AppService, OrderItemService],
