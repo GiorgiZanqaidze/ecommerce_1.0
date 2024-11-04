@@ -25,8 +25,8 @@ export class CheckoutMessageDto {
     description: "List of items in the checkout.",
     type: [CheckoutItemDto], // Reference the new CheckoutItemDto
     example: [
-      { productId: "product_1", quantity: 2, price: 19.99 },
-      { productId: "product_2", quantity: 1, price: 39.99 },
+      { productId: "1", quantity: 2, price: 19.99 },
+      { productId: "2", quantity: 1, price: 39.99 },
     ],
   })
   @IsArray()
