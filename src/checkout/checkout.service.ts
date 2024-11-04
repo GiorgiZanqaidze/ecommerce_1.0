@@ -1,9 +1,9 @@
 import { Injectable, BadRequestException, NotFoundException } from "@nestjs/common";
 import { RabbitMQService } from "src/rabbitmq/rabbitmq.service";
 import { CheckoutMessageDto } from "./dto/checkout-message.dto";
-import { OrderMessageData, OrderMessageDto } from "src/rabbitmq/dto/order-message.dto";
+import { OrderMessageData } from "src/rabbitmq/dto/order-message.dto";
 import { ProductsService } from "../products/products.service"; // Import ProductsService
-import { OrderItemDto } from "src/orders/dto/order-item.dto";
+import { v4 as uuidv4 } from "uuid";
 
 @Injectable()
 export class CheckoutService {
@@ -25,13 +25,17 @@ export class CheckoutService {
     // Calculate the total price
     const totalPrice = this.calculateTotalPrice(checkoutData.items);
 
+    // Or use a custom readable format if preferred
+    const orderIdReadable = `ORD-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 100000)).padStart(5, "0")}`;
+
     // Publish a message to RabbitMQ
-    await this.rabbitMQService.sendMessage<OrderMessageData>({
+    this.rabbitMQService.sendMessage<OrderMessageData>({
       messageType: "check-out",
       data: {
-        orderId: "1",
+        orderId: orderIdReadable,
         status: "pending",
         totalPrice,
+        userId: checkoutData.userId,
       },
     });
 

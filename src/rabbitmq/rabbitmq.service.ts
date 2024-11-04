@@ -47,7 +47,7 @@ export class RabbitMQService implements OnModuleDestroy {
     }
   }
 
-  async sendMessage<T>(message: MessageDto<T>) {
+  sendMessage<T>(message: MessageDto<T>) {
     try {
       // Validate message is an instance of OrderMessageDto
       if (!message) {

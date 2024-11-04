@@ -1,4 +1,3 @@
-// dto/checkout-message.dto.ts
 import { IsArray, IsNumber, IsString } from "class-validator";
 import { ApiProperty } from "@nestjs/swagger";
 
@@ -23,14 +22,14 @@ export class CheckoutMessageDto {
 
   @ApiProperty({
     description: "List of items in the checkout.",
-    type: [CheckoutItemDto], // Reference the new CheckoutItemDto
+    type: [CheckoutItemDto],
     example: [
       { productId: "1", quantity: 2, price: 19.99 },
       { productId: "2", quantity: 1, price: 39.99 },
     ],
   })
   @IsArray()
-  items: CheckoutItemDto[]; // Use the new CheckoutItemDto type
+  items: CheckoutItemDto[];
 
   @ApiProperty({ description: "The shipping address for the order.", example: "123 Main St, Springfield, USA" })
   @IsString()

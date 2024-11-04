@@ -2,7 +2,6 @@ import { Controller, Post, Body, Get, BadRequestException } from "@nestjs/common
 import { RabbitMQService } from "./rabbitmq.service";
 import { ApiTags, ApiResponse } from "@nestjs/swagger";
 import { CustomLoggerService } from "src/common";
-import { LoggerContext } from "src/common/types/logger-context.enum";
 import { OrderMessageDto } from "./dto/order-message.dto";
 
 @ApiTags("rabbitmq") // Swagger tag for grouping
@@ -16,7 +15,7 @@ export class RabbitMQController {
   @ApiResponse({ status: 400, description: "Invalid message format." })
   async sendMessage(@Body() sendMessageDto: OrderMessageDto) {
     try {
-      await this.rabbitMQService.sendMessage(sendMessageDto);
+      this.rabbitMQService.sendMessage(sendMessageDto);
       return { status: "Message sent!" };
     } catch (error) {
       this.logger.error("Error sending message", error.message);
