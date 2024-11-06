@@ -1,4 +1,3 @@
-
 # E-Commerce API 🛒
 
 This project is a backend for an e-commerce platform built with NestJS, Prisma ORM, and other modern tools.
@@ -10,6 +9,7 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
 - 🗂️ **Categories**: Organize products into categories.
 - 📦 **Orders**: Order management with relation to users and order items.
 - 🛠️ **Prisma ORM**: Database interaction through Prisma.
+- 🔄 Messaging Queue: Efficient message handling and asynchronous tasks with RabbitMQ.
 - 🛡️ **Role-based Access**: Different user roles with specific permissions.
 
 ## Technologies Used 🛠️
@@ -52,12 +52,14 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
 ### Installation ⚙️
 
 1. Clone the repository:
+
    ```bash
    git clone <repository-url>
    cd ecommerce
    ```
 
 2. Install dependencies:
+
    ```bash
    npm install
    ```
@@ -66,6 +68,7 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
    Copy the `.env.example` file to `.env` and update it with your database and other configuration details.
 
 4. Run Prisma migrations to set up the database:
+
    ```bash
    npx prisma migrate dev
    ```
@@ -78,6 +81,7 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
 ### Running the Application ▶️
 
 - In development mode:
+
   ```bash
   npm run start:dev
   ```
@@ -111,9 +115,3 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
 
 - `GET /orders`: 📦 Get all orders.
 - `POST /orders`: ➡️ Create a new order.
-
-...and more based on your modules.
-
-## License 📜
-
-This project is licensed under the MIT License.
