@@ -98,20 +98,3 @@ This project is a backend for an e-commerce platform built with NestJS, Prisma O
   ```bash
   npm run test
   ```
-
-## API Endpoints 🌐
-
-### Authentication
-
-- `POST /auth/login`: 🔑 User login.
-- `POST /auth/register`: 📝 User registration.
-
-### Products
-
-- `GET /products`: 📄 List all products.
-- `POST /products`: ➕ Add a new product.
-
-### Orders
-
-- `GET /orders`: 📦 Get all orders.
-- `POST /orders`: ➡️ Create a new order.
